@@ -15,12 +15,13 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          # todo, change image name
-          images: ${{ vars.DOCKERHUB_USERNAME }}/changeme
+          images: ${{ vars.DOCKERHUB_USERNAME }}/caddy-cloudflaredns
           tags: |
             type=raw,value=latest,enable={{is_default_branch}}
             type=ref,event=branch
             type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+            type=semver,pattern={{major}}
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
       - name: Set up Docker Buildx
@@ -34,7 +35,6 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           push: true
-          # todo: check me
           platforms: linux/amd64,linux/arm64
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
