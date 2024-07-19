@@ -1,4 +1,4 @@
-# Build Docker Image
+# Caddy with cloudfalre-dns
 
 Custom [caddy] image with [cloudflare-dns]. Detail in [Dockerfile].
 
